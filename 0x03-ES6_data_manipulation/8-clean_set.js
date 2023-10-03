@@ -12,8 +12,10 @@ export default function cleanSet(set, startString) {
   const array = [];
 
   set.forEach((value) => {
-    if (typeof value === 'string') {
-      if (value.startsWith(startString)) array.push(value.substring(startString.length));
+    if (typeof value === 'string' && value.startsWith(startString)) {
+      const substring = value.substring(startString.length);
+
+      if (substring) array.push(substring);
     }
   });
 
