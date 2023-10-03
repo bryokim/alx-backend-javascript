@@ -1,4 +1,13 @@
 export default function cleanSet(set, startString) {
+  if (
+    !set
+    || !startString
+    || !(set instanceof Set)
+    || !typeof startString === 'string'
+  ) {
+    return '';
+  }
+
   const array = [];
   const str = startString.trim();
 
@@ -7,7 +16,9 @@ export default function cleanSet(set, startString) {
   }
 
   set.forEach((value) => {
-    if (value.startsWith(str)) array.push(value.substring(str.length));
+    if (typeof value === 'string') {
+      if (value.startsWith(str)) array.push(value.substring(str.length));
+    }
   });
 
   return array.join('-');
