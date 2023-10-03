@@ -1,18 +1,19 @@
 export default function updateStudentGradeByCity(
   studentsArray,
   city,
-  newGrades
+  newGrades,
 ) {
   const updatedStudents = studentsArray
-    .filter((student) => student.location == city)
+    .filter((student) => student.location === city)
     .map((student) => {
       const studentGrade = newGrades.filter(
-        (newGrade) => newGrade.studentId == student.id
+        (newGrade) => newGrade.studentId === student.id,
       );
 
-      student['grade'] = studentGrade.length ? studentGrade[0].grade : 'N/A';
+      const newStudent = student;
+      newStudent.grade = studentGrade.length ? studentGrade[0].grade : 'N/A';
 
-      return student;
+      return newStudent;
     });
 
   return updatedStudents;
