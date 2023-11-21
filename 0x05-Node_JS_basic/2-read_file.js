@@ -1,12 +1,12 @@
-const fs = require("fs");
+const fs = require('fs');
 
 function processCSV(content) {
-  const rows = content.split("\n").filter((row) => row !== "");
-  const headers = rows.shift().split(",");
+  const rows = content.split('\n').filter((row) => row !== '');
+  const headers = rows.shift().split(',');
 
   const data = [];
   rows.forEach((row) => {
-    const list = row.split(",");
+    const list = row.split(',');
     const rowData = {};
 
     headers.forEach((header, index) => {
@@ -37,14 +37,14 @@ function printFieldsInfo(fieldsInfo) {
     process.stdout.write(
       `Number of students in ${field}: ${
         firstnames.length
-      }. List: ${firstnames.join(", ")}\n`
+      }. List: ${firstnames.join(', ')}\n`,
     );
   }
 }
 
 function countStudents(path) {
   try {
-    const content = fs.readFileSync(path, "utf-8");
+    const content = fs.readFileSync(path, 'utf-8');
 
     const data = processCSV(content);
 
@@ -52,7 +52,7 @@ function countStudents(path) {
 
     printFieldsInfo(getFieldsInfo(data));
   } catch (error) {
-    throw new Error("Cannot load the database");
+    throw new Error('Cannot load the database');
   }
 }
 

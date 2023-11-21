@@ -1,15 +1,15 @@
-const http = require("http");
-const fs = require("fs");
+const http = require('http');
+const fs = require('fs');
 
-const database = process.argv[2] || "";
+const database = process.argv[2] || '';
 
 function processCSV(content) {
-  const rows = content.split("\n").filter((row) => row !== "");
-  const headers = rows.shift().split(",");
+  const rows = content.split('\n').filter((row) => row !== '');
+  const headers = rows.shift().split(',');
 
   const data = [];
   rows.forEach((row) => {
-    const list = row.split(",");
+    const list = row.split(',');
     const rowData = {};
 
     headers.forEach((header, index) => {
@@ -36,12 +36,12 @@ function getFieldsInfo(data) {
 }
 
 function printFieldsInfo(fieldsInfo) {
-  let output = "";
+  let output = '';
 
   for (const [field, firstnames] of Object.entries(fieldsInfo)) {
     output += `Number of students in ${field}: ${
       firstnames.length
-    }. List: ${firstnames.join(", ")}\n`;
+    }. List: ${firstnames.join(', ')}\n`;
   }
 
   return output.slice(0, -1);
@@ -49,8 +49,8 @@ function printFieldsInfo(fieldsInfo) {
 
 function countStudents(path) {
   return new Promise((resolve, reject) => {
-    fs.readFile(path, "utf-8", (err, data) => {
-      if (err) return reject(Error("Cannot load the database"));
+    fs.readFile(path, 'utf-8', (err, data) => {
+      if (err) return reject(Error('Cannot load the database'));
 
       const processedCSV = processCSV(data);
       const output = printFieldsInfo(getFieldsInfo(processedCSV));
@@ -62,13 +62,13 @@ function countStudents(path) {
 
 const app = http.createServer();
 
-app.on("request", (req, res) => {
-  if (req.url === "/") {
-    res.writeHead(200, { "Content-Type": "text/plain" });
-    res.end("Hello Holberton School!");
-  } else if (req.url === "/students") {
-    res.writeHead(200, { "Content-Type": "text/plain" });
-    res.write("This is the list of our students\n");
+app.on('request', (req, res) => {
+  if (req.url === '/') {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Hello Holberton School!');
+  } else if (req.url === '/students') {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.write('This is the list of our students\n');
 
     countStudents(database)
       .then((data) => res.end(data))

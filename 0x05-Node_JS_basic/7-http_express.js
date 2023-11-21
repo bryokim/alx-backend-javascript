@@ -1,16 +1,16 @@
-const express = require("express");
+const express = require('express');
 
-const fs = require("fs");
+const fs = require('fs');
 
-const database = process.argv[2] || "";
+const database = process.argv[2] || '';
 
 function processCSV(content) {
-  const rows = content.split("\n").filter((row) => row !== "");
-  const headers = rows.shift().split(",");
+  const rows = content.split('\n').filter((row) => row !== '');
+  const headers = rows.shift().split(',');
 
   const data = [];
   rows.forEach((row) => {
-    const list = row.split(",");
+    const list = row.split(',');
     const rowData = {};
 
     headers.forEach((header, index) => {
@@ -37,12 +37,12 @@ function getFieldsInfo(data) {
 }
 
 function printFieldsInfo(fieldsInfo) {
-  let output = "";
+  let output = '';
 
   for (const [field, firstnames] of Object.entries(fieldsInfo)) {
     output += `Number of students in ${field}: ${
       firstnames.length
-    }. List: ${firstnames.join(", ")}\n`;
+    }. List: ${firstnames.join(', ')}\n`;
   }
 
   return output.slice(0, -1);
@@ -50,8 +50,8 @@ function printFieldsInfo(fieldsInfo) {
 
 function countStudents(path) {
   return new Promise((resolve, reject) => {
-    fs.readFile(path, "utf-8", (err, data) => {
-      if (err) return reject(Error("Cannot load the database"));
+    fs.readFile(path, 'utf-8', (err, data) => {
+      if (err) return reject(Error('Cannot load the database'));
 
       const processedCSV = processCSV(data);
       const output = printFieldsInfo(getFieldsInfo(processedCSV));
@@ -63,11 +63,11 @@ function countStudents(path) {
 
 const app = express();
 
-app.get("/", (req, res) => {
-  res.send("Hello Holberton School!");
+app.get('/', (req, res) => {
+  res.send('Hello Holberton School!');
 });
 
-app.get("/students", (req, res) => {
+app.get('/students', (req, res) => {
   countStudents(database)
     .then((data) => res.send(`This is the list of our students\n${data}`))
     .catch((error) => res.send(error.toString()));
