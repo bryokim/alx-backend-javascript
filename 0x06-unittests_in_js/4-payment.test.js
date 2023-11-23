@@ -28,5 +28,7 @@ describe("sendPaymentRequestToApi", function () {
     expect(calculateNumberStub.firstCall.args[2]).to.equal(20);
 
     expect(console.log.firstCall.args[0]).to.equal("The total is: 10");
+
+    calculateNumberStub.restore();
   });
 });
